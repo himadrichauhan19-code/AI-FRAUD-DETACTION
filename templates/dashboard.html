@@ -1,5 +1,37 @@
 ﻿{% extends "base.html" %}
 {% block content %}
+{% set ns = namespace(total=0, flagged=0, approved=0, pending=0) %}
+{% for t in transactions %}
+  {% set ns.total = ns.total + 1 %}
+  {% if t.status == 'Flagged' %}
+    {% set ns.flagged = ns.flagged + 1 %}
+  {% else %}
+    {% set ns.approved = ns.approved + 1 %}
+  {% endif %}
+  {% if t.actual_label is none %}
+    {% set ns.pending = ns.pending + 1 %}
+  {% endif %}
+{% endfor %}
+
+<section class="kpi-grid">
+  <article class="card kpi">
+    <p>Total Transactions</p>
+    <h3>{{ ns.total }}</h3>
+  </article>
+  <article class="card kpi">
+    <p>Flagged by AI</p>
+    <h3>{{ ns.flagged }}</h3>
+  </article>
+  <article class="card kpi">
+    <p>Approved by AI</p>
+    <h3>{{ ns.approved }}</h3>
+  </article>
+  <article class="card kpi">
+    <p>Pending Feedback</p>
+    <h3>{{ ns.pending }}</h3>
+  </article>
+</section>
+
 <section class="card">
   <h2>Transaction Dashboard</h2>
   <table>

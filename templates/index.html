@@ -3,24 +3,61 @@
 <section class="hero">
   <div class="hero-copy">
     <p class="eyebrow">AI Fraud Detection Platform</p>
-    <h1>Secure every transaction before fraud happens.</h1>
+    <h1>Fraud stop karo before payment settlement.</h1>
     <p class="hero-sub">
-      Real-time risk scoring with behavior signals like time, location, merchant and payment pattern.
-      Built for dynamic e-payment workflows.
+      Real-time fraud risk engine that learns from transaction history and investigator feedback.
+      Designed for dynamic e-payment systems and live case review.
     </p>
-    <div class="actions">
+    <div class="actions hero-actions">
       <a class="btn" href="{{ url_for('register') }}">Get Started</a>
       <a class="btn ghost" href="{{ url_for('login') }}">Sign In</a>
     </div>
+    <div class="chip-row">
+      <span class="chip">Live Risk Score</span>
+      <span class="chip">Feedback Training</span>
+      <span class="chip">Time + Location + App Source</span>
+    </div>
   </div>
   <div class="hero-panel">
-    <h3>Why this works</h3>
+    <h3>Core Modules</h3>
     <ul>
-      <li>History-based fraud intelligence</li>
-      <li>Investigator feedback loop</li>
-      <li>Fast API-ready architecture</li>
-      <li>Render + GitHub deployment ready</li>
+      <li>User module: registration, login, payment entry</li>
+      <li>Fraud model: Naive Bayes style risk scoring</li>
+      <li>Investigator module: mark fraud / legit feedback</li>
+      <li>Admin-ready cloud deployment on Render</li>
     </ul>
   </div>
+</section>
+
+<section class="info-grid">
+  <article class="card info-card">
+    <h3>How Detection Works</h3>
+    <p>Each transaction is scored using behavioral and contextual features, then classified as approved or flagged.</p>
+    <ol>
+      <li>Submit payment details</li>
+      <li>Generate fraud probability</li>
+      <li>Review in dashboard</li>
+      <li>Investigator feedback retrains model</li>
+    </ol>
+  </article>
+  <article class="card info-card">
+    <h3>Training Data Used</h3>
+    <p>The model learns on historical labeled transactions using:</p>
+    <ul>
+      <li>Amount and merchant pattern</li>
+      <li>Date and time behavior</li>
+      <li>Location drift pattern</li>
+      <li>Transfer app source and payment method</li>
+    </ul>
+  </article>
+  <article class="card info-card">
+    <h3>Project Scope</h3>
+    <p>Built for institute-level project + deployment demo with practical fraud workflow.</p>
+    <ul>
+      <li>Dynamic web app architecture</li>
+      <li>Model artifact storage in `models/`</li>
+      <li>Production deploy pipeline via GitHub + Render</li>
+    </ul>
+  </article>
 </section>
 {% endblock %}
