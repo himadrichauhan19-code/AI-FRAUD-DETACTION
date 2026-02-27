@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card form-card auth-card">
+  <h2>Welcome Back</h2>
+  <p class="muted">Sign in to continue transaction monitoring.</p>
+  <form method="post">
+    <label>Username</label>
+    <input name="username" placeholder="Enter username" autocomplete="username" required />
+
+    <label>Password</label>
+    <input type="password" name="password" placeholder="Enter password" autocomplete="current-password" required />
+
+    <button class="btn" type="submit">Sign In</button>
+  </form>
+  <p class="auth-foot">New user? <a href="{{ url_for('register') }}">Create account</a></p>
+</section>
+{% endblock %}

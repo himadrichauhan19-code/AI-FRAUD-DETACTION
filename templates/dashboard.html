@@ -1,0 +1,65 @@
+﻿{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>Transaction Dashboard</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Amount</th>
+        <th>Merchant</th>
+        <th>Location</th>
+        <th>App</th>
+        <th>Method</th>
+        <th>Risk</th>
+        <th>Status</th>
+        <th>Actual</th>
+        <th>Feedback</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in transactions %}
+      <tr>
+        <td>{{ t.timestamp }}</td>
+        <td>{{ "%.2f"|format(t.amount) }}</td>
+        <td>{{ t.merchant }}</td>
+        <td>{{ t.location }}</td>
+        <td>{{ t.app_source }}</td>
+        <td>{{ t.payment_method }}</td>
+        <td>{{ t.risk }}%</td>
+        <td><span class="badge {{ 'flagged' if t.status == 'Flagged' else 'approved' }}">{{ t.status }}</span></td>
+        <td>
+          {% if t.actual_label is none %}
+            Pending
+          {% elif t.actual_label == 1 %}
+            Fraud
+          {% else %}
+            Legit
+          {% endif %}
+        </td>
+        <td>
+          {% if t.actual_label is none %}
+          <div class="feedback-actions">
+            <form method="post" action="{{ url_for('feedback', tx_id=t.id) }}">
+              <input type="hidden" name="label" value="fraud" />
+              <button class="btn small danger" type="submit">Mark Fraud</button>
+            </form>
+            <form method="post" action="{{ url_for('feedback', tx_id=t.id) }}">
+              <input type="hidden" name="label" value="legit" />
+              <button class="btn small secondary" type="submit">Mark Legit</button>
+            </form>
+          </div>
+          {% else %}
+            Labeled
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="10">No transactions yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

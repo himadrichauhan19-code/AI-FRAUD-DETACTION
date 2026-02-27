@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card form-card auth-card">
+  <h2>Create Account</h2>
+  <p class="muted">Start using fraud-aware payment monitoring.</p>
+  <form method="post">
+    <label>Username</label>
+    <input name="username" placeholder="At least 3 characters" autocomplete="username" minlength="3" required />
+
+    <label>Password</label>
+    <input type="password" name="password" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required />
+
+    <label>Confirm Password</label>
+    <input type="password" name="confirm_password" placeholder="Re-enter password" autocomplete="new-password" minlength="6" required />
+
+    <button class="btn" type="submit">Create Account</button>
+  </form>
+  <p class="auth-foot">Already registered? <a href="{{ url_for('login') }}">Sign in</a></p>
+</section>
+{% endblock %}

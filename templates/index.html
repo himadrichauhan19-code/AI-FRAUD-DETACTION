@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">AI Fraud Detection Platform</p>
+    <h1>Secure every transaction before fraud happens.</h1>
+    <p class="hero-sub">
+      Real-time risk scoring with behavior signals like time, location, merchant and payment pattern.
+      Built for dynamic e-payment workflows.
+    </p>
+    <div class="actions">
+      <a class="btn" href="{{ url_for('register') }}">Get Started</a>
+      <a class="btn ghost" href="{{ url_for('login') }}">Sign In</a>
+    </div>
+  </div>
+  <div class="hero-panel">
+    <h3>Why this works</h3>
+    <ul>
+      <li>History-based fraud intelligence</li>
+      <li>Investigator feedback loop</li>
+      <li>Fast API-ready architecture</li>
+      <li>Render + GitHub deployment ready</li>
+    </ul>
+  </div>
+</section>
+{% endblock %}

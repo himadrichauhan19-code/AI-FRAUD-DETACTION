@@ -1,0 +1,17 @@
+﻿Model Name: Naive Bayes Fraud Model
+Version: 1.0.0
+
+This project uses a history-based Naive Bayes style fraud model.
+
+Training data fields:
+- amount
+- timestamp (derived: hour, day_of_week, month, time_bucket)
+- location
+- app_source
+- payment_method
+- merchant
+- actual_label (0 legit, 1 fraud)
+
+Model artifacts:
+- fraud_profile.json (trained profile)
+- model_info.json (metadata)
