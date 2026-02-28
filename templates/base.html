@@ -12,7 +12,6 @@
     <nav>
       <a href="{{ url_for('index') }}">Home</a>
       {% if session.get('user') %}
-        <a href="{{ url_for('payment') }}">Payment</a>
         <a href="{{ url_for('dashboard') }}">Dashboard</a>
         <a href="{{ url_for('logout') }}">Logout</a>
       {% else %}

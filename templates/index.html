@@ -5,15 +5,21 @@
     <p class="kicker">AI Fraud Detection in E-Payments</p>
     <h1>Welcome to FraudShield</h1>
     <p class="intro">
-      FraudShield is a real-time payment fraud detection platform. It analyzes every transaction
-      using amount, date-time, location, transfer app, merchant behavior, and payment method
-      to classify risk instantly.
+      FraudShield is a secure digital payment monitoring platform built to detect suspicious
+      transactions before financial loss occurs. The system studies transaction context in real
+      time, including amount behavior, date-time pattern, location changes, transfer app usage,
+      merchant history, and payment method risk signals.
+    </p>
+    <p class="intro intro-secondary">
+      If a transaction matches suspicious behavior, it is flagged for investigator review.
+      Genuine transactions are approved and tracked for future learning so detection keeps
+      improving with every feedback cycle.
     </p>
 
     <div class="hero-actions">
       {% if session.get('user') %}
-      <a class="btn" href="{{ url_for('payment') }}">Start Payment Check</a>
-      <a class="btn ghost" href="{{ url_for('dashboard') }}">Open Dashboard</a>
+      <a class="btn" href="{{ url_for('dashboard') }}">Open Dashboard</a>
+      <a class="btn ghost" href="{{ url_for('logout') }}">Logout</a>
       {% else %}
       <a class="btn" href="{{ url_for('register') }}">Sign Up</a>
       <a class="btn ghost" href="{{ url_for('login') }}">Sign In</a>
@@ -21,16 +27,25 @@
     </div>
 
     <div class="model-box">
-      <h3>AI Model Used</h3>
+      <h3>About AI Model</h3>
       <p>{{ model_name }} (v{{ model_version }})</p>
-      <small>History-based model trained from transaction behavior and investigator feedback.</small>
+      <small>
+        This model learns from historical labeled transactions (fraud/legit) and continuously
+        updates risk scoring logic using investigator feedback. It combines behavior pattern
+        analysis and probabilistic scoring to assign fraud risk percentage in real time.
+      </small>
+      <ul class="model-points">
+        <li>Uses time, date, location, app source, merchant, and method features</li>
+        <li>Flags suspicious transactions for manual validation</li>
+        <li>Improves prediction accuracy after each verified feedback</li>
+      </ul>
     </div>
   </div>
 
   <div class="welcome-right">
     <img
-      src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1800&q=80"
-      alt="Secure payment fraud monitoring"
+      src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=1800&q=80"
+      alt="Fraud monitoring and cyber security"
       loading="lazy"
     />
   </div>
