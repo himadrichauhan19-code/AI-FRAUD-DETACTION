@@ -402,7 +402,7 @@ def index():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if session.get("user"):
-        return redirect(url_for("payment"))
+        return redirect(url_for("index"))
 
     if request.method == "POST":
         username = request.form.get("username", "").strip()
@@ -436,7 +436,7 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if session.get("user"):
-        return redirect(url_for("payment"))
+        return redirect(url_for("index"))
 
     if request.method == "POST":
         username = request.form.get("username", "").strip()
@@ -448,7 +448,7 @@ def login():
 
         session["user"] = username
         flash("Logged in successfully.", "success")
-        return redirect(url_for("payment"))
+        return redirect(url_for("index"))
 
     return render_template("login.html")
 
@@ -566,4 +566,6 @@ train_model_from_history()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=True)
+
+
 

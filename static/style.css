@@ -14,7 +14,7 @@ body {
   margin: 0;
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   color: var(--text);
-  background: linear-gradient(160deg, #edf5ef, #f8fbf9);
+  background: radial-gradient(circle at top right, #dff2e6 0%, #eef6f1 52%, #f9fbfa 100%);
 }
 
 .nav {
@@ -64,7 +64,7 @@ body {
 
 .welcome-left,
 .welcome-right {
-  background: #f9fcfa;
+  background: linear-gradient(145deg, #fafdfb, #f3f8f5);
   border: 1px solid var(--border);
   border-radius: 18px;
 }
@@ -213,3 +213,4 @@ th, td { border-bottom: 1px solid var(--border); padding: 10px; text-align: left
   font-size: 14px;
   margin-bottom: 6px;
 }
+
