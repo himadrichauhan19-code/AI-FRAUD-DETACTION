@@ -1,34 +1,36 @@
 ﻿{% extends "base.html" %}
 {% block content %}
-<section class="home-hero home-hero-single">
-  <div class="home-left">
-    <p class="home-tag">AI Fraud Detection in E-Payments</p>
+<section class="welcome-wrap">
+  <div class="welcome-left">
+    <p class="kicker">AI Fraud Detection in E-Payments</p>
     <h1>Welcome to FraudShield</h1>
-    <p class="home-text">
-      A real-time fraud detection platform for digital payments. Each transaction is analyzed
-      using amount, date-time, location, transfer app, merchant behavior, and payment method,
-      then risk is calculated instantly.
+    <p class="intro">
+      FraudShield is a real-time payment fraud detection platform. It analyzes every transaction
+      using amount, date-time, location, transfer app, merchant behavior, and payment method
+      to classify risk instantly.
     </p>
 
-    <div class="actions home-actions">
+    <div class="hero-actions">
       {% if session.get('user') %}
       <a class="btn" href="{{ url_for('payment') }}">Start Payment Check</a>
-      <a class="btn ghost" href="{{ url_for('logout') }}">Logout</a>
+      <a class="btn ghost" href="{{ url_for('dashboard') }}">Open Dashboard</a>
       {% else %}
       <a class="btn" href="{{ url_for('register') }}">Sign Up</a>
       <a class="btn ghost" href="{{ url_for('login') }}">Sign In</a>
       {% endif %}
     </div>
 
-    <p class="home-model-line">
-      {{ model_name }} v{{ model_version }}
-    </p>
+    <div class="model-box">
+      <h3>AI Model Used</h3>
+      <p>{{ model_name }} (v{{ model_version }})</p>
+      <small>History-based model trained from transaction behavior and investigator feedback.</small>
+    </div>
   </div>
 
-  <div class="home-right">
+  <div class="welcome-right">
     <img
       src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1800&q=80"
-      alt="Secure online payment verification"
+      alt="Secure payment fraud monitoring"
       loading="lazy"
     />
   </div>
