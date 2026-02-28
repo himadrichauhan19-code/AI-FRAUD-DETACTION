@@ -11,8 +11,8 @@
 
     <div class="actions lp-actions">
       {% if session.get('user') %}
-      <a class="btn" href="{{ url_for('payment') }}">Get Started</a>
-      <a class="btn ghost" href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a class="btn" href="{{ url_for('payment') }}">Start Payment Check</a>
+      <a class="btn ghost" href="{{ url_for('logout') }}">Logout</a>
       {% else %}
       <a class="btn" href="{{ url_for('register') }}">Get Started</a>
       <a class="btn ghost" href="{{ url_for('login') }}">Login</a>

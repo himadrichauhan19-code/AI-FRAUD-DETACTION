@@ -554,8 +554,11 @@ def dashboard():
     user_transactions = [normalize_row(r) for r in rows if r.get("user") == session["user"]]
     user_transactions.sort(key=lambda x: x["timestamp"], reverse=True)
 
-    return render_template("dashboard.html", transactions=user_transactions)
+    if not user_transactions:
+        flash("Please add a transaction first to view dashboard.", "error")
+        return redirect(url_for("payment"))
 
+    return render_template("dashboard.html", transactions=user_transactions)
 
 ensure_storage()
 train_model_from_history()
@@ -563,3 +566,4 @@ train_model_from_history()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=True)
+
