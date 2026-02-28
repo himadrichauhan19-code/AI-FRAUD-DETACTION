@@ -392,9 +392,11 @@ def normalize_row(row: dict) -> dict:
 
 @app.route("/")
 def index():
-    if session.get("user"):
-        return redirect(url_for("payment"))
-    return render_template("index.html")
+    return render_template(
+        "index.html",
+        model_name=MODEL_NAME,
+        model_version=MODEL_VERSION,
+    )
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -561,4 +563,3 @@ train_model_from_history()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=True)
-

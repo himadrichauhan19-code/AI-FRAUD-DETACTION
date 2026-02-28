@@ -1,63 +1,70 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block content %}
-<section class="hero">
+<section class="hero hero-main">
   <div class="hero-copy">
-    <p class="eyebrow">AI Fraud Detection Platform</p>
-    <h1>Fraud stop karo before payment settlement.</h1>
+    <p class="eyebrow">AI Fraud Detection In E-Payments</p>
+    <h1>Welcome to FraudShield</h1>
     <p class="hero-sub">
-      Real-time fraud risk engine that learns from transaction history and investigator feedback.
-      Designed for dynamic e-payment systems and live case review.
+      This platform detects suspicious payments in real time by analyzing amount, date-time,
+      location, transfer app, merchant pattern, and payment method behavior.
     </p>
     <div class="actions hero-actions">
+      {% if session.get('user') %}
+      <a class="btn" href="{{ url_for('payment') }}">Start New Transaction</a>
+      <a class="btn ghost" href="{{ url_for('dashboard') }}">Open Dashboard</a>
+      {% else %}
       <a class="btn" href="{{ url_for('register') }}">Get Started</a>
-      <a class="btn ghost" href="{{ url_for('login') }}">Sign In</a>
+      <a class="btn ghost" href="{{ url_for('login') }}">Login</a>
+      {% endif %}
     </div>
     <div class="chip-row">
-      <span class="chip">Live Risk Score</span>
-      <span class="chip">Feedback Training</span>
-      <span class="chip">Time + Location + App Source</span>
+      <span class="chip">Real-Time Risk Score</span>
+      <span class="chip">Feedback Based Learning</span>
+      <span class="chip">Cloud Deploy Ready</span>
     </div>
   </div>
-  <div class="hero-panel">
-    <h3>Core Modules</h3>
-    <ul>
-      <li>User module: registration, login, payment entry</li>
-      <li>Fraud model: Naive Bayes style risk scoring</li>
-      <li>Investigator module: mark fraud / legit feedback</li>
-      <li>Admin-ready cloud deployment on Render</li>
-    </ul>
+
+  <div class="hero-image-wrap">
+    <img
+      class="hero-image"
+      src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=80"
+      alt="Digital payment security overview"
+      loading="lazy"
+    />
   </div>
 </section>
 
 <section class="info-grid">
   <article class="card info-card">
-    <h3>How Detection Works</h3>
-    <p>Each transaction is scored using behavioral and contextual features, then classified as approved or flagged.</p>
+    <h3>Project Introduction</h3>
+    <p>
+      FraudShield is a dynamic fraud detection website where users submit transactions,
+      AI assigns risk score, and investigators verify suspicious cases.
+    </p>
+    <ul>
+      <li>Secure online payment monitoring</li>
+      <li>Real-time flagged/approved decision</li>
+      <li>Dashboard for transaction review</li>
+    </ul>
+  </article>
+
+  <article class="card info-card">
+    <h3>Demo Workflow</h3>
     <ol>
-      <li>Submit payment details</li>
-      <li>Generate fraud probability</li>
-      <li>Review in dashboard</li>
-      <li>Investigator feedback retrains model</li>
+      <li>Create account and login</li>
+      <li>Enter transaction details in payment form</li>
+      <li>System predicts fraud risk instantly</li>
+      <li>Mark Fraud/Legit to retrain model</li>
     </ol>
   </article>
-  <article class="card info-card">
-    <h3>Training Data Used</h3>
-    <p>The model learns on historical labeled transactions using:</p>
-    <ul>
-      <li>Amount and merchant pattern</li>
-      <li>Date and time behavior</li>
-      <li>Location drift pattern</li>
-      <li>Transfer app source and payment method</li>
-    </ul>
-  </article>
-  <article class="card info-card">
-    <h3>Project Scope</h3>
-    <p>Built for institute-level project + deployment demo with practical fraud workflow.</p>
-    <ul>
-      <li>Dynamic web app architecture</li>
-      <li>Model artifact storage in `models/`</li>
-      <li>Production deploy pipeline via GitHub + Render</li>
-    </ul>
+
+  <article class="card info-card ai-card">
+    <h3>AI Tool Used</h3>
+    <p class="ai-name">{{ model_name }} (v{{ model_version }})</p>
+    <p>
+      History-based Naive Bayes style model trained on behavioral features:
+      time, date, location, transfer app, merchant, and payment method.
+    </p>
   </article>
 </section>
 {% endblock %}
