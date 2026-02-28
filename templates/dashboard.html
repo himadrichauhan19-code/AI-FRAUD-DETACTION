@@ -13,6 +13,12 @@
   {% endif %}
 {% endfor %}
 
+<section class="card note-card">
+  <h3>Quick Meaning</h3>
+  <p><strong>Flagged</strong> means AI found this transaction suspicious and it needs review.</p>
+  <p><strong>Merchant</strong> means payment receiver name (shop, website, biller, or business).</p>
+</section>
+
 <section class="kpi-grid">
   <article class="card kpi">
     <p>Total Transactions</p>
@@ -39,7 +45,7 @@
       <tr>
         <th>Time</th>
         <th>Amount</th>
-        <th>Merchant</th>
+        <th>Merchant / Receiver</th>
         <th>Location</th>
         <th>App</th>
         <th>Method</th>
@@ -59,7 +65,13 @@
         <td>{{ t.app_source }}</td>
         <td>{{ t.payment_method }}</td>
         <td>{{ t.risk }}%</td>
-        <td><span class="badge {{ 'flagged' if t.status == 'Flagged' else 'approved' }}">{{ t.status }}</span></td>
+        <td>
+          {% if t.status == 'Flagged' %}
+          <span class="badge flagged">Flagged (Suspicious)</span>
+          {% else %}
+          <span class="badge approved">Approved</span>
+          {% endif %}
+        </td>
         <td>
           {% if t.actual_label is none %}
             Pending

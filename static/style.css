@@ -491,3 +491,118 @@ td {
   font-weight: 700;
   letter-spacing: 0.02em;
 }
+
+.lp-hero-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.lp-panel,
+.lp-image-panel,
+.lp-card {
+  background: #f9fbfa;
+  border: 1px solid #c7ddd0;
+  border-radius: 20px;
+}
+
+.lp-panel {
+  padding: 28px;
+}
+
+.lp-eyebrow {
+  margin: 0 0 8px;
+  color: #156447;
+  font-size: 13px;`r`n  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lp-panel h1 {
+  margin: 0 0 12px;
+  font-size: 48px;
+  line-height: 1.05;
+  color: #0d2a1f;
+}
+
+.lp-copy {
+  margin: 0 0 18px;
+  max-width: 860px;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #24493b;
+}
+
+.lp-actions {
+  margin-bottom: 12px;
+}
+
+.lp-image-panel {
+  overflow: hidden;
+  min-height: 390px;
+}
+
+.lp-image {
+  width: 100%;
+  height: 100%;
+  min-height: 390px;
+  object-fit: cover;
+  display: block;
+}
+
+.lp-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.lp-card {
+  padding: 24px;
+}
+
+.lp-card h3 {
+  margin: 0 0 10px;
+  font-size: 32px;
+}
+
+.lp-card p,
+.lp-card li {
+  color: #204537;
+  font-size: 18px;`r`n  line-height: 1.45;
+}
+
+.lp-card ul,
+.lp-card ol {
+  margin: 12px 0 0;
+  padding-left: 22px;
+}
+
+.lp-tool {
+  font-weight: 800;
+  color: #175f42 !important;
+}
+
+@media (max-width: 1100px) {
+  .lp-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lp-panel h1 {
+    font-size: 42px;
+  }
+
+  .lp-copy {
+    font-size: 20px;
+  }
+
+  .lp-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lp-card p,
+  .lp-card li {
+    font-size: 18px;
+  }
+}
+

@@ -1,29 +1,72 @@
 ﻿{% extends "base.html" %}
 {% block content %}
-<section class="welcome-hero">
-  <img
-    class="welcome-bg"
-    src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=2200&q=80"
-    alt="Fraud monitoring and risk analytics"
-    loading="lazy"
-  />
-  <div class="welcome-overlay">
-    <p class="tool-line">AI Tool: {{ model_name }} v{{ model_version }}</p>
+<section class="lp-hero-grid">
+  <article class="lp-panel">
+    <p class="lp-eyebrow">AI FRAUD DETECTION IN E-PAYMENTS</p>
     <h1>Welcome to FraudShield</h1>
-    <p>
-      Every payment is checked in real time for fraud risk using transaction amount, time, date,
-      location, transfer app, merchant pattern and payment method behavior.
-      Suspicious transactions are flagged instantly for review.
+    <p class="lp-copy">
+      This platform detects suspicious payments in real time by analyzing amount, date-time,
+      location, transfer app, merchant pattern, and payment method behavior.
     </p>
-    <div class="actions welcome-actions">
+
+    <div class="actions lp-actions">
       {% if session.get('user') %}
-      <a class="btn" href="{{ url_for('payment') }}">Start Transaction</a>
-      <a class="btn ghost" href="{{ url_for('dashboard') }}">Open Dashboard</a>
+      <a class="btn" href="{{ url_for('payment') }}">Get Started</a>
+      <a class="btn ghost" href="{{ url_for('dashboard') }}">Dashboard</a>
       {% else %}
-      <a class="btn" href="{{ url_for('login') }}">Login</a>
-      <a class="btn ghost" href="{{ url_for('register') }}">Create Account</a>
+      <a class="btn" href="{{ url_for('register') }}">Get Started</a>
+      <a class="btn ghost" href="{{ url_for('login') }}">Login</a>
       {% endif %}
     </div>
-  </div>
+
+    <div class="chip-row">
+      <span class="chip">Real-Time Risk Score</span>
+      <span class="chip">Feedback Based Learning</span>
+      <span class="chip">Cloud Deploy Ready</span>
+    </div>
+  </article>
+
+  <aside class="lp-image-panel">
+    <img
+      class="lp-image"
+      src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1400&q=80"
+      alt="Fraud detection monitoring"
+      loading="lazy"
+    />
+  </aside>
+</section>
+
+<section class="lp-cards-grid">
+  <article class="lp-card">
+    <h3>Project Introduction</h3>
+    <p>
+      FraudShield is a dynamic fraud detection website where users submit transactions,
+      AI assigns risk score, and investigators verify suspicious cases.
+    </p>
+    <ul>
+      <li>Secure online payment monitoring</li>
+      <li>Real-time flagged/approved decision</li>
+      <li>Dashboard for transaction review</li>
+    </ul>
+  </article>
+
+  <article class="lp-card">
+    <h3>Demo Workflow</h3>
+    <ol>
+      <li>Create account and login</li>
+      <li>Enter transaction details in payment form</li>
+      <li>System predicts fraud risk instantly</li>
+      <li>Mark Fraud/Legit to retrain model</li>
+    </ol>
+  </article>
+
+  <article class="lp-card">
+    <h3>AI Tool Used</h3>
+    <p class="lp-tool">{{ model_name }} (v{{ model_version }})</p>
+    <p>
+      History-based Naive Bayes style model trained on time, date, location,
+      transfer app, merchant, and payment method.
+    </p>
+  </article>
 </section>
 {% endblock %}
