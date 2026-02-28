@@ -17,8 +17,8 @@
 
     <div class="hero-actions">
       {% if session.get('user') %}
-      <a class="btn" href="{{ url_for('dashboard') }}">Open Dashboard</a>
-      <a class="btn ghost" href="{{ url_for('logout') }}">Logout</a>
+      <a class="btn" href="{{ url_for('payment') }}">New Payment Check</a>
+      <a class="btn ghost" href="{{ url_for('dashboard') }}">Open Dashboard</a>
       {% else %}
       <a class="btn" href="{{ url_for('register') }}">Sign Up</a>
       <a class="btn ghost" href="{{ url_for('login') }}">Sign In</a>

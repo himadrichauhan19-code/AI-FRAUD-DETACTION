@@ -40,6 +40,10 @@
 
 <section class="card">
   <h2>Transaction Dashboard</h2>
+  <p class="dash-sub">All past checks are saved here. Use "Check Another Payment" for a new entry.</p>
+  <div class="actions" style="margin-bottom: 10px;">
+    <a class="btn" href="{{ url_for('payment') }}">Check Another Payment</a>
+  </div>
   <table>
     <thead>
       <tr>

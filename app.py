@@ -11,13 +11,11 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev-secret-change-me")
 
-# Demo auth store. In production, use a real database + hashed passwords.
-USERS = {}
-
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 MODEL_DIR = BASE_DIR / "models"
 DATA_FILE = DATA_DIR / "transactions.csv"
+USERS_FILE = DATA_DIR / "users.json"
 MODEL_FILE = MODEL_DIR / "fraud_profile.json"
 MODEL_META_FILE = MODEL_DIR / "model_info.json"
 MODEL_NAME = "Naive Bayes Fraud Model"
@@ -44,6 +42,7 @@ MODEL_CACHE = {"model": None, "mtime": None}
 def ensure_storage() -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
+
     if not MODEL_META_FILE.exists():
         with MODEL_META_FILE.open("w", encoding="utf-8") as f:
             json.dump(
@@ -66,6 +65,10 @@ def ensure_storage() -> None:
                 f,
             )
 
+    if not USERS_FILE.exists():
+        with USERS_FILE.open("w", encoding="utf-8") as f:
+            json.dump({}, f)
+
     if not DATA_FILE.exists():
         with DATA_FILE.open("w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=CSV_HEADERS)
@@ -83,13 +86,29 @@ def ensure_storage() -> None:
 
     migrated_rows = []
     for row in rows:
-        migrated = {k: row.get(k, "") for k in CSV_HEADERS}
-        migrated_rows.append(migrated)
+        migrated_rows.append({k: row.get(k, "") for k in CSV_HEADERS})
 
     with DATA_FILE.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=CSV_HEADERS)
         writer.writeheader()
         writer.writerows(migrated_rows)
+
+
+def load_users() -> Dict[str, str]:
+    ensure_storage()
+    with USERS_FILE.open("r", encoding="utf-8") as f:
+        try:
+            users = json.load(f)
+        except json.JSONDecodeError:
+            return {}
+    if not isinstance(users, dict):
+        return {}
+    return {str(k): str(v) for k, v in users.items()}
+
+
+def save_users(users: Dict[str, str]) -> None:
+    with USERS_FILE.open("w", encoding="utf-8") as f:
+        json.dump(users, f)
 
 
 def load_transactions() -> List[Dict]:
@@ -168,42 +187,34 @@ def _features_from_row(row: dict) -> dict:
 
 
 def fraud_risk_score(amount: float, hour: int, payment_method: str) -> int:
-    """Rule-based fallback when history model is not ready."""
     score = 0
-
     if amount > 10000:
         score += 60
     elif amount > 5000:
         score += 35
     elif amount > 2000:
         score += 20
-
     if hour < 6 or hour > 22:
         score += 20
-
     if payment_method.lower() in {"gift card", "crypto"}:
         score += 25
-
     return min(score, 100)
 
 
 def get_model():
     if not MODEL_FILE.exists():
         return None
-
     mtime = MODEL_FILE.stat().st_mtime
     if MODEL_CACHE["model"] is None or MODEL_CACHE["mtime"] != mtime:
         with MODEL_FILE.open("r", encoding="utf-8") as f:
             MODEL_CACHE["model"] = json.load(f)
         MODEL_CACHE["mtime"] = mtime
-
     return MODEL_CACHE["model"]
 
 
 def train_model_from_history() -> bool:
     rows = load_transactions()
     labeled = [r for r in rows if r.get("actual_label") in {"0", "1"}]
-
     if len(labeled) < 10:
         return False
 
@@ -231,13 +242,12 @@ def train_model_from_history() -> bool:
         "merchant": {},
     }
 
-    fraud_amounts = []
-    legit_amounts = []
+    fraud_amounts: List[float] = []
+    legit_amounts: List[float] = []
 
     for row in labeled:
         f = _features_from_row(row)
         y = _to_int(row.get("actual_label"))
-
         update_counter(counters["hour"], str(f["hour"]), y)
         update_counter(counters["day_of_week"], str(f["day_of_week"]), y)
         update_counter(counters["month"], str(f["month"]), y)
@@ -253,7 +263,7 @@ def train_model_from_history() -> bool:
         else:
             legit_amounts.append(amount)
 
-    def amount_stats(values: List[float]) -> Dict:
+    def amount_stats(values: List[float]) -> Dict[str, float]:
         if not values:
             return {"mean": 0.0, "std": 0.0}
         mean = sum(values) / len(values)
@@ -302,7 +312,6 @@ def predict_risk(row: dict) -> Tuple[int, str]:
         bucket = counters.get(counter_name, {})
         record = bucket.get(key, {"fraud": 0, "total": 0})
         bucket_size = max(len(bucket), 1)
-
         numer = float(record.get("fraud", 0)) + alpha
         denom = float(record.get("total", 0)) + (alpha * bucket_size)
         if denom <= 0:
@@ -335,7 +344,6 @@ def predict_risk(row: dict) -> Tuple[int, str]:
         elif amount > legit_mean + 2 * legit_std:
             score += 0.15
 
-    # Low history fallback blend with rules.
     if total_count < 30:
         rule_score = fraud_risk_score(
             _to_float(row.get("amount")),
@@ -352,16 +360,13 @@ def predict_risk(row: dict) -> Tuple[int, str]:
 def set_feedback(tx_id: str, user: str, label: int) -> bool:
     rows = load_transactions()
     updated = False
-
     for row in rows:
         if row.get("id") == tx_id and row.get("user") == user:
             row["actual_label"] = str(label)
             updated = True
             break
-
     if not updated:
         return False
-
     save_transactions(rows)
     return True
 
@@ -370,11 +375,7 @@ def normalize_row(row: dict) -> dict:
     risk = _to_int(row.get("predicted_risk"))
     predicted_label = _to_int(row.get("predicted_label"))
     actual = row.get("actual_label")
-
-    if actual not in {"0", "1"}:
-        actual_label = None
-    else:
-        actual_label = _to_int(actual)
+    actual_label = None if actual not in {"0", "1"} else _to_int(actual)
 
     return {
         "id": row.get("id"),
@@ -392,11 +393,7 @@ def normalize_row(row: dict) -> dict:
 
 @app.route("/")
 def index():
-    return render_template(
-        "index.html",
-        model_name=MODEL_NAME,
-        model_version=MODEL_VERSION,
-    )
+    return render_template("index.html", model_name=MODEL_NAME, model_version=MODEL_VERSION)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -422,11 +419,13 @@ def register():
             flash("Password and confirm password do not match.", "error")
             return redirect(url_for("register"))
 
-        if username in USERS:
+        users = load_users()
+        if username in users:
             flash("User already exists. Please log in.", "error")
             return redirect(url_for("login"))
 
-        USERS[username] = password
+        users[username] = password
+        save_users(users)
         flash("Registration successful. Please log in.", "success")
         return redirect(url_for("login"))
 
@@ -442,7 +441,8 @@ def login():
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "").strip()
 
-        if USERS.get(username) != password:
+        users = load_users()
+        if users.get(username) != password:
             flash("Invalid username or password.", "error")
             return redirect(url_for("login"))
 
@@ -560,12 +560,10 @@ def dashboard():
 
     return render_template("dashboard.html", transactions=user_transactions)
 
+
 ensure_storage()
 train_model_from_history()
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=True)
-
-
-
