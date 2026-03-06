@@ -1,51 +1,67 @@
 ﻿{% extends "base.html" %}
 {% block content %}
-<section class="welcome-wrap">
-  <div class="welcome-left">
+<section id="home" class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
     <p class="kicker">AI Fraud Detection in E-Payments</p>
-    <h1>When payments move fast, fraud moves faster.</h1>
-    <p class="intro">
-      This website is built to protect digital payment systems from fraudulent activity in real time.
-      FraudShield studies transaction behavior before settlement and identifies suspicious patterns
-      like unusual amount spikes, odd timing, location drift, risky transfer channels, and unknown
-      merchant behavior.
-    </p>
-    <p class="intro intro-secondary">
-      The goal is simple: reduce financial fraud without blocking genuine users. Investigators can
-      validate flagged transactions, and the model keeps improving from that feedback cycle.
-    </p>
-
+    <h1>AI Fraud Detection <span>in E-Payments</span></h1>
+    <p>Protecting online payments with machine learning, transaction intelligence, and investigator feedback loops.</p>
     <div class="hero-actions">
       {% if session.get('user') %}
-      <a class="btn" href="{{ url_for('payment') }}">New Payment Check</a>
-      <a class="btn ghost" href="{{ url_for('dashboard') }}">Open Dashboard</a>
+        <a class="btn-main" href="{{ url_for('payment') }}">Get Started</a>
+        <a class="btn-ghost" href="{{ url_for('dashboard') }}">Open Dashboard</a>
       {% else %}
-      <a class="btn" href="{{ url_for('register') }}">Sign Up</a>
-      <a class="btn ghost" href="{{ url_for('login') }}">Sign In</a>
+        <a class="btn-main" href="{{ url_for('register') }}">Get Started</a>
+        <a class="btn-ghost" href="{{ url_for('login') }}">Login</a>
       {% endif %}
     </div>
-
-    <div class="model-box">
-      <h3>Model Intelligence</h3>
-      <p>{{ model_name }} (v{{ model_version }})</p>
-      <small>
-        History-based fraud scoring model that uses time, date, location, app source, merchant,
-        and payment method signals to generate real-time risk percentage.
-      </small>
-      <ul class="model-points">
-        <li>Instant suspicious transaction flagging</li>
-        <li>Investigator feedback driven learning</li>
-        <li>Adaptive pattern detection over time</li>
-      </ul>
-    </div>
   </div>
+</section>
 
-  <div class="welcome-right">
-    <img
-      src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1900&q=80"
-      alt="Fraud prevention in online payments"
-      loading="lazy"
-    />
+<section id="features" class="section">
+  <h2>Core Features</h2>
+  <div class="card-grid">
+    <article class="feature-card">
+      <h3>Secure Payments</h3>
+      <p>Encrypted transaction flow with safe processing and real-time protection checks.</p>
+    </article>
+    <article class="feature-card">
+      <h3>Real-Time Fraud Detection</h3>
+      <p>AI risk scoring from amount, date-time, location, app source, and payment method.</p>
+    </article>
+    <article class="feature-card">
+      <h3>Investigator Dashboard</h3>
+      <p>Review suspicious transactions, mark Fraud/Legit, and improve model quality.</p>
+    </article>
+    <article class="feature-card">
+      <h3>Admin Control</h3>
+      <p>Monitor platform performance, model behavior, and decision consistency.</p>
+    </article>
   </div>
+</section>
+
+<section id="modules" class="section process">
+  <h2>Our Approach</h2>
+  <p class="sub">Step-by-step fraud detection process</p>
+  <div class="step-grid">
+    <article class="step-card">1. Requirement Analysis</article>
+    <article class="step-card">2. Data Collection &amp; Preprocessing</article>
+    <article class="step-card">3. Model Training</article>
+    <article class="step-card">4. Real-Time Risk Prediction</article>
+    <article class="step-card">5. Investigator Feedback</article>
+    <article class="step-card">6. Continuous Model Improvement</article>
+  </div>
+</section>
+
+<section id="about" class="section plain">
+  <h2>About AI Model</h2>
+  <p>
+    This platform uses a history-based fraud model to learn from past labeled transactions and adapt to new fraud behavior over time.
+  </p>
+</section>
+
+<section id="contact" class="section plain">
+  <h2>Contact</h2>
+  <p>For demo and support, connect with the project admin or investigator team.</p>
 </section>
 {% endblock %}

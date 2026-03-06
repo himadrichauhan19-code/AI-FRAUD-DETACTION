@@ -4,33 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ title or "AI Fraud Detection" }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
-  <header class="nav">
-    <a href="{{ url_for('index') }}" class="brand">FraudShield</a>
-    <nav>
-      <a href="{{ url_for('index') }}">Home</a>
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="logo-dot"></div>
+      <a href="{{ url_for('index') }}" class="brand">AI Fraud Detection <span>in E-Payments</span></a>
+    </div>
+
+    <nav class="nav-links">
+      <a href="{{ url_for('index') }}#home">Home</a>
+      <a href="{{ url_for('index') }}#features">Features</a>
+      <a href="{{ url_for('index') }}#modules">Modules</a>
+      <a href="{{ url_for('index') }}#about">About</a>
+      <a href="{{ url_for('index') }}#contact">Contact</a>
       {% if session.get('user') %}
-        <a href="{{ url_for('payment') }}">New Check</a>
+        <a href="{{ url_for('payment') }}">Payment Check</a>
         <a href="{{ url_for('dashboard') }}">Dashboard</a>
-        <a href="{{ url_for('logout') }}">Logout</a>
+        <a class="btn-nav" href="{{ url_for('logout') }}">Logout</a>
       {% else %}
-        <a href="{{ url_for('login') }}">Sign In</a>
-        <a href="{{ url_for('register') }}">Sign Up</a>
+        <a class="btn-nav" href="{{ url_for('login') }}">Login</a>
+        <a class="btn-nav alt" href="{{ url_for('register') }}">Sign Up</a>
       {% endif %}
     </nav>
   </header>
 
-  <main class="container">
+  <main>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-        {% for category, message in messages %}
-          <div class="alert {{ category }}">{{ message }}</div>
-        {% endfor %}
+        <section class="flash-wrap">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </section>
       {% endif %}
     {% endwith %}
-
     {% block content %}{% endblock %}
   </main>
 </body>
