@@ -22,20 +22,28 @@
   <h2>Core Features</h2>
   <div class="card-grid">
     <article class="feature-card">
+      <div class="feature-icon">SP</div>
       <h3>Secure Payments</h3>
       <p>Encrypted transaction flow with safe processing and real-time protection checks.</p>
+      <a class="learn-btn" href="{{ url_for('index') }}#about">Learn More</a>
     </article>
     <article class="feature-card">
+      <div class="feature-icon">RT</div>
       <h3>Real-Time Fraud Detection</h3>
       <p>AI risk scoring from amount, date-time, location, app source, and payment method.</p>
+      <a class="learn-btn" href="{{ url_for('index') }}#modules">Learn More</a>
     </article>
     <article class="feature-card">
+      <div class="feature-icon">ID</div>
       <h3>Investigator Dashboard</h3>
       <p>Review suspicious transactions, mark Fraud/Legit, and improve model quality.</p>
+      <a class="learn-btn" href="{{ url_for('dashboard') if session.get('user') else url_for('login') }}">Learn More</a>
     </article>
     <article class="feature-card">
+      <div class="feature-icon">AC</div>
       <h3>Admin Control</h3>
       <p>Monitor platform performance, model behavior, and decision consistency.</p>
+      <a class="learn-btn" href="{{ url_for('index') }}#contact">Learn More</a>
     </article>
   </div>
 </section>
