@@ -332,3 +332,42 @@ th, td { border-bottom: 1px solid #d7e5f8; padding: 10px; text-align: left; }
   filter: brightness(1.08);
 }
 
+
+/* Mobile overflow fix */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 720px) {
+  .topbar {
+    padding: 10px 14px;
+    width: 100%;
+  }
+
+  .brand-wrap {
+    width: 100%;
+  }
+
+  .nav-links {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .nav-links a {
+    font-size: 15px;
+    padding: 6px 8px;
+  }
+
+  .btn-nav {
+    margin-top: 2px;
+  }
+
+  .hero {
+    width: 100%;
+    padding: 38px 16px;
+  }
+}
+
