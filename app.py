@@ -447,7 +447,7 @@ def login():
             return redirect(url_for("login"))
 
         session["user"] = username
-        flash("Logged in successfully.", "success")
+        flash(f"{username}", "success")
         return redirect(url_for("index"))
 
     return render_template("login.html")
@@ -567,3 +567,4 @@ train_model_from_history()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=True)
+
