@@ -23,6 +23,7 @@
       <a href="{{ url_for('index') }}#about">About</a>
       <a href="{{ url_for('index') }}#contact">Contact</a>
       {% if session.get('user') %}
+        <span class="user-chip">Hi, {{ session.get('user') }}</span>
         <a href="{{ url_for('payment') }}">Payment Check</a>
         <a href="{{ url_for('dashboard') }}">Dashboard</a>
         <a class="btn-nav" href="{{ url_for('logout') }}">Logout</a>
